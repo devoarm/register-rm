@@ -197,7 +197,7 @@ export default function Home({ dataDept, dataHeader, dataLevel }) {
                 render={({ field }) => (
                   <Select {...field}>
                     {depts.map((item) => (
-                      <MenuItem value={item.dept}>{item.descriptions}</MenuItem>
+                      <MenuItem value={item.dept} key={item.dept}>{item.descriptions}</MenuItem>
                     ))}
                   </Select>
                 )}
@@ -222,7 +222,7 @@ export default function Home({ dataDept, dataHeader, dataLevel }) {
                 render={({ field }) => (
                   <Select {...field}>
                     {header.map((item) => (
-                      <MenuItem value={item.id}>{item.description}</MenuItem>
+                      <MenuItem value={item.id} key={item.id}>{item.description}</MenuItem>
                     ))}
                   </Select>
                 )}
@@ -246,7 +246,7 @@ export default function Home({ dataDept, dataHeader, dataLevel }) {
                 render={({ field }) => (
                   <Select {...field}>
                     {level.map((item) => (
-                      <MenuItem value={item.level}>{item.description}</MenuItem>
+                      <MenuItem value={item.level} key={item.level}>{item.description}</MenuItem>
                     ))}
                   </Select>
                 )}
