@@ -26,12 +26,9 @@ export default function Home({ dataDept, dataHeader, dataLevel }) {
   const router = useRouter();
   const [pname, setPname] = useState("");
   const [pnameError, setPnameError] = useState(false);
-  const [depts, setDepts] = useState(dataDept.results);
-  const [header, setHeader] = useState(dataHeader.results);
-  const [level, setLevel] = useState(dataLevel.results);
-  useEffect(() => {
-    console.log(dataDept);
-  }, []);
+  const [depts, setDepts] = useState(dataDept.results ?? []);
+  const [header, setHeader] = useState(dataHeader.results ?? []);
+  const [level, setLevel] = useState(dataLevel.results ?? []);
 
   const handleChange = (event) => {
     setPname(event.target.value);
@@ -58,14 +55,21 @@ export default function Home({ dataDept, dataHeader, dataLevel }) {
         icon: "error",
         title: "คุณเคยสมัครไปแล้ว",
         showConfirmButton: false,
-        timer: 1500,
+        timer: 2000,
       });
     } else if (res.msg == "hasUser") {
       Swal.fire({
         icon: "error",
         title: "ชื่อผู้ใช้งานได้ใช้งานแล้ว",
         showConfirmButton: false,
-        timer: 1500,
+        timer: 2000,
+      });
+    } else if (res.msg == "hasCid") {
+      Swal.fire({
+        icon: "error",
+        title: "เลขบัตรประชาชนซ้ำ",
+        showConfirmButton: false,
+        timer: 2000,
       });
     } else {
       Swal.fire({
@@ -74,7 +78,7 @@ export default function Home({ dataDept, dataHeader, dataLevel }) {
         showConfirmButton: false,
         timer: 1500,
       }).then(() => {
-        router.push(`https://www.aranhos.go.th/emr/`);
+        router.push(`https://www.aranhos.go.th/rmaran/`);
       });
     }
   };
@@ -124,8 +128,8 @@ export default function Home({ dataDept, dataHeader, dataLevel }) {
                 render={({ field }) => (
                   <Select {...field}>
                     <MenuItem value="นาย">นาย</MenuItem>
-                    <MenuItem value="นาย">นาง</MenuItem>
-                    <MenuItem value="นาย">นางสาว</MenuItem>
+                    <MenuItem value="นาง">นาง</MenuItem>
+                    <MenuItem value="นางสาว">นางสาว</MenuItem>
                   </Select>
                 )}
                 name={"pname"}
@@ -182,7 +186,10 @@ export default function Home({ dataDept, dataHeader, dataLevel }) {
                 pattern: /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*]{6,16}$/,
               })}
             />
-            <span>* รหัสผ่านต้องไม่ต่ำกว่า 6 หลัก และ มีตัวอักษรภาษาอังกฤษอย่างน้อย 1 ตัว</span>
+            <span>
+              * รหัสผ่านต้องไม่ต่ำกว่า 6 หลัก และ มีตัวอักษรภาษาอังกฤษอย่างน้อย
+              1 ตัว
+            </span>
 
             <FormControl margin="normal" fullWidth error={Boolean(errors.dept)}>
               <InputLabel id="demo-simple-select-label">แผนก</InputLabel>

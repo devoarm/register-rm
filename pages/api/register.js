@@ -15,7 +15,11 @@ export default async function handler(req, res) {
           loginname: data.loginname,
         })
         .select("*");
-
+      let checkCid = await await db_rm("user")
+        .where({
+          person_id: data.person_id,
+        })
+        .select("*");
       if (checkName.length > 0) {
         res.status(401).json({
           status: 401,
@@ -27,6 +31,12 @@ export default async function handler(req, res) {
           status: 401,
           msg: "hasUser",
           data: checkUser,
+        });
+      } else if (checkCid.length > 0) {
+        res.status(401).json({
+          status: 401,
+          msg: "hasCid",
+          data: checkCid,
         });
       } else {
         let query = await db_rm("user").insert({
